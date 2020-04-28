@@ -56,6 +56,7 @@
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtProductName
             // 
@@ -125,6 +126,7 @@
             this.Name = "FrmProduct";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Product";
+            this.Load += new System.EventHandler(this.FrmProduct_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
