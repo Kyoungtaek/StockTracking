@@ -12,7 +12,7 @@ namespace StockTracking.DAL.DAO
         public List<CategoryDetailDTO> Select()
         {
             var categories = new List<CategoryDetailDTO>();
-            var list = db.Categories;
+            var list = db.Categorys;
 
             foreach (var item in list)
             {
@@ -40,7 +40,7 @@ namespace StockTracking.DAL.DAO
         {
             try
             {
-                db.Categories.Add(entity);
+                db.Categorys.Add(entity);
                 db.SaveChanges();
 
                 return true;

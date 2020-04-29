@@ -41,7 +41,7 @@ namespace StockTracking.DAL.DAO
             {
                 var products = new List<ProductDetailDTO>();
                 var list = (from p in db.Products
-                            join c in db.Categories on p.CategoryID equals c.ID
+                            join c in db.Categorys on p.CategoryID equals c.ID
                             select new
                             {
                                 ProductName = p.ProductName,
