@@ -17,6 +17,8 @@ namespace StockTracking
     {
         private CustomerBLL bll = new CustomerBLL();
         private CustomerDTO dto = new CustomerDTO();
+        private CustomerDetailDTO detail = new CustomerDetailDTO();
+
         public FrmCustomerList()
         {
             InitializeComponent();
@@ -52,6 +54,33 @@ namespace StockTracking
             list = list.Where(x => x.CsutomerName.ToLower().Contains(txtCustomerName.Text.ToLower())).ToList();
 
             dataGridView1.DataSource = list;
+        }
+        
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            detail = new CustomerDetailDTO();
+            detail.ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
+            detail.CsutomerName = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+        }
+        
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (detail.ID == 0)
+            {
+                MessageBox.Show("Please select customer");
+            }
+            else
+            {
+                var frm = new FrmCustomer();
+                frm.detail = detail;
+                frm.isUpdate = true;
+                this.Hide();
+                frm.ShowDialog();
+                this.Visible = true;
+                bll = new CustomerBLL();
+                dto = bll.Select();
+                dataGridView1.DataSource = dto.Customers;
+            }
         }
     }
 }

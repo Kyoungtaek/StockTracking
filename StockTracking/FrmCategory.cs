@@ -14,6 +14,10 @@ namespace StockTracking
 {
     public partial class FrmCategory : Form
     {
+        private CategoryBLL bll = new CategoryBLL();
+        public CategoryDetailDTO detail = new CategoryDetailDTO();
+        public bool isUpdate = false;
+
         public FrmCategory()
         {
             InitializeComponent();
@@ -23,11 +27,13 @@ namespace StockTracking
         {
             this.Close();
         }
-
-        CategoryBLL bll = new CategoryBLL();
+        
         private void FrmCategory_Load(object sender, EventArgs e)
         {
-
+            if (isUpdate)
+            {
+                txtCategoryName.Text = detail.CategoryName;
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -38,13 +44,25 @@ namespace StockTracking
             }
             else
             {
-                var category = new CategoryDetailDTO();
-                category.CategoryName = txtCategoryName.Text.Trim();
-
-                if (bll.Insert(category))
+                if (!isUpdate)
                 {
-                    MessageBox.Show("Category is added");
-                    txtCategoryName.Clear();
+                    var category = new CategoryDetailDTO();
+                    category.CategoryName = txtCategoryName.Text.Trim();
+
+                    if (bll.Insert(category))
+                    {
+                        MessageBox.Show("Category is added");
+                        txtCategoryName.Clear();
+                    }
+                }
+                else if (isUpdate)
+                {
+                    detail.CategoryName = txtCategoryName.Text;
+                    if (bll.Update(detail))
+                    {
+                        MessageBox.Show("Updated");
+                        this.Close();
+                    }
                 }
             }
         }
